@@ -1,28 +1,29 @@
 # Exercise 4: DPLYR and flights data
 
 # Install the nycflights13 package and read it in.  Require the dplyr package
-# install.packages("nycflights13")
+install.packages("nycflights13")
+install.packages("dplyr")
 library(nycflights13)
 library(dplyr)
 
 # The data.frame flights should now be accessible to you.  View it, 
 # and get some basic information about the number of rows/columns
-
+View(flights)
 
 # Add a column that is the amount of time gained in the air (`arr_delay` - `dep_delay`)
-
+flights <- mutate(flights, time_gain = flights$arr_delay - flights$dep_delay)
 
 # Sort your data.frame desceding by the column you just created
-
-
+flights <- arrange(flights, desc(time_gain))
 # Try doing the last 2 steps in a single operation using the pipe operator
+flights <- flights %>% mutate(time_gain = arr_delay - dep_delay) %>% arrange(desc(time_gain))
 
 
 # Make a histogram of the amount of gain using the `hist` command
-
+hist(flights$time_gain)
 
 # On average, did flights gain or lose time?
-
+mean(flights)
 
 # Create a data.frame that is of flights headed to seatac ('SEA'), 
 
@@ -32,7 +33,7 @@ library(dplyr)
 ### Bonus ###
 # Write a function that allows you to specify an origin, a destination, and a column of interest
 # that returns a data.frame of flights from the origin to the destination and only the column of interest
-## Hint: see chapter 11 section on standard evaluation
+## Hint: see slides on standard evaluation
 
 
 # Retireve the air_time column for flights from JFK to SEA
